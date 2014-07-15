@@ -48,4 +48,18 @@ SDK.prototype.postMulti = function(path, data, callback){
 	});
 };
 
+SDK.prototype.postMultiRecog = function(path, data, group_name, callback){
+        var url = this.apiUrl(path);
+
+	var r = request.post(url, {json : true}, callback);
+	
+	var form = r.form();
+	form.append('api_key', this.api_key);
+	form.append('api_secret', this.api_secret);
+	form.append('group_name', group_name);
+	_.each(data, function(obj, key){
+		form.append(key, obj.value, obj.meta);
+	});
+};
+
 module.exports = SDK;
